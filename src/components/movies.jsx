@@ -7,7 +7,7 @@ export default function Movies() {
   const deleteMovie = (id) => {
     movies.splice(
       movies.findIndex((movie) => {
-        return movie._id == id;
+        return movie._id === id;
       }),
       1
     );
@@ -32,7 +32,7 @@ export default function Movies() {
             {movies.map((movie) => {
               return (
                 <tr key={movie._id}>
-                  <td scope="row">{movie.title}</td>
+                  <td>{movie.title}</td>
                   <td>{movie.genre.name}</td>
                   <td>{movie.numberInStock}</td>
                   <td>{movie.dailyRentalRate}</td>
