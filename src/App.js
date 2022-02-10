@@ -12,16 +12,16 @@ function App() {
   ]);
 
   const increment = (counter) => {
-    const newCounters = counters;
-    const index = counters.findIndex( c => c.id === counter.id );
-    newCounters[index].value = counter.value + 1;
+    const newCounters = [...counters];
+    const index = counters.indexOf( counter );
+    newCounters[index].value++;
     setCounters([...newCounters]);
   };
 
   const decrement = (counter) => {
-    const newCounters = counters;
-    const index = counters.findIndex( c => c.id === counter.id );
-    newCounters[index].value = counter.value - 1;
+    const newCounters = [...counters];
+    const index = counters.indexOf( counter );
+    newCounters[index].value--;
     setCounters([...newCounters]);
   };
 
@@ -49,7 +49,7 @@ function App() {
   return (
     <main className="container">
       <NavBar counterTotal={getCounterTotal()} />
-      <button type="button" className="btn btn-primary " onClick={() => {resetCounters()}}>
+      <button type="button" className="btn btn-primary mt-3 mb-3" onClick={() => {resetCounters()}}>
         Reset
       </button>
       <Counters
@@ -58,6 +58,7 @@ function App() {
         decrement={(c) => decrement(c)}
         deleteCount={(c) => deleteCount(c)}
       />
+      <Movies/>
     </main>
   );
 }

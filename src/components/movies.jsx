@@ -1,18 +1,28 @@
 import React, { useState } from "react";
 import { getMovies } from "../services/fakeMovieService";
+import LikeButton from "./Common/likeButton";
 
 export default function Movies() {
   const [movies, setMovies] = useState(getMovies());
 
   const deleteMovie = (id) => {
-    movies.splice(
-      movies.findIndex((movie) => {
+    const newMovies = movies;
+    newMovies.splice(
+      newMovies.findIndex((movie) => {
         return movie._id === id;
       }),
       1
     );
-    setMovies([...movies]);
+    setMovies([...newMovies]);
   };
+
+  const onLikeBtnClicked = (movie) => {
+    let newMovies = movies;
+    const index = newMovies.indexOf(movie)
+
+    newMovies[index].liked = !newMovies[index].liked;
+    setMovies([...newMovies]);
+  }
 
   if (movies.length > 0) {
     return (
@@ -36,6 +46,9 @@ export default function Movies() {
                   <td>{movie.genre.name}</td>
                   <td>{movie.numberInStock}</td>
                   <td>{movie.dailyRentalRate}</td>
+                  <td>
+                    <LikeButton liked={movie.liked} onClick={() => {onLikeBtnClicked(movie)}}/>
+                  </td>
                   <td>
                     <button
                       type="button"

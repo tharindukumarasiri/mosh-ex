@@ -20,25 +20,20 @@ export default function Counter({ counter, increment, decrement, deleteCount }) 
 
     return (
         <div className="row">
-            <div className="col">
+            <div className="col-1 d-flex align-items-center">
                 <span className={getColorsBadge()}>{getCounterText()}</span>
             </div>
             <div className="col">
-                <button type="button" className="btn btn-secondary" onClick={() => increment(counter)}>
+                <button type="button" className="btn btn-secondary btn-m" onClick={() => increment(counter)}>
                     +
                 </button>
-            </div>
-            <div className="col">
-                <button type="button" className="btn btn-secondary" onClick={() => decrement(counter)} disabled={counter.value < 1}  >
+                <button type="button" className="btn btn-secondary btn-m m-2" onClick={() => decrement(counter)} disabled={counter.value < 1}  >
                     -
                 </button>
-            </div>
-            <div className="col">
-                <button type="button" className="btn btn-danger" onClick={() => deleteCount(counter)}>
+                <button type="button" className="btn btn-danger btn-m" onClick={() => deleteCount(counter)}>
                     X
                 </button>
             </div>
-            <br />
         </div>
     );
 }
