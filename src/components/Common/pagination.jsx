@@ -1,6 +1,13 @@
 import React from 'react'
 import _ from "lodash"
+import PropTypes from 'prop-types';
 
+Pagination.propTypes = {
+    items: PropTypes.array,
+    pageSize: PropTypes.number,
+    pageNumber: PropTypes.number,
+    onChangePage: PropTypes.func
+}
 
 export default function Pagination({ items, pageSize, pageNumber, onChangePage }) {
     const pageCount = Math.ceil(items.length / pageSize)
