@@ -18,6 +18,7 @@ function App() {
     { _id: 2, name: "All Genres" },
   ]);
   const [currentPageId, setCurrentPageId] = useState(1)
+  const [pageNumber, setPageNumber] = useState(1);
 
   useEffect(() => {
     let newMenuList = [...sideMenuList];
@@ -65,7 +66,7 @@ function App() {
       <div className="row justify-content-start">
 
         <div className="col-2">
-          <ListGroup items={sideMenuList} selectedItemId={currentPageId} onSelectItem={(id) => { setCurrentPageId(id) }} />
+          <ListGroup items={sideMenuList} selectedItemId={currentPageId} onSelectItem={(id) => { setCurrentPageId(id); setPageNumber(1) }} />
         </div>
         { currentPageId === sideMenuList[0]._id &&
           <div className="col-10">
@@ -83,7 +84,7 @@ function App() {
         }
         { currentPageId !== sideMenuList[0]._id &&
           <div className="col-10">
-            <Movies selectedGenreId={currentPageId} />
+            <Movies selectedGenreId={currentPageId} pageNumber={pageNumber} setPageNumber={(pgNum) => {setPageNumber(pgNum)}} />
           </div>
         }
       </div>

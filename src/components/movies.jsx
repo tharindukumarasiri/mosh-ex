@@ -1,14 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getMovies } from "../services/fakeMovieService";
 import LikeButton from "./Common/likeButton";
 import Pagination from "./Common/pagination";
 import { paginate } from "./utils/paginate";
 
-const pageSize = 4
+const pageSize = 4;
+let shortMovieList;
 
-export default function Movies({selectedGenreId}) {
+export default function Movies({selectedGenreId, pageNumber, setPageNumber}) {
   const [movies, setMovies] = useState(getMovies());
-  const [pageNumber, setPageNumber] = useState(1);
+
+  useEffect( () => {
+    if(shortMovieList.length === 0){
+      setPageNumber(pageNumber -1)
+    }
+  },[shortMovieList]);
 
   const deleteMovie = (id) => {
     const newMovies = movies;
@@ -32,8 +38,8 @@ export default function Movies({selectedGenreId}) {
   if (movies.length > 0) {
     let genreFilteredMovieList = movies.filter(movie => {return movie.genre._id === selectedGenreId} )
     if(genreFilteredMovieList.length === 0  ) genreFilteredMovieList = movies
-    const shortMovieList = paginate(genreFilteredMovieList, pageNumber, pageSize)
-    if(shortMovieList.length === 0) setPageNumber(pageNumber -1)
+    shortMovieList = paginate(genreFilteredMovieList, pageNumber, pageSize)
+    // if(shortMovieList.length === 0) setPageNumber(pageNumber -1)
 
     return (
       <React.Fragment>

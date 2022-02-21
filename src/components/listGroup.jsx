@@ -1,4 +1,4 @@
-export default function ListGroup({items, selectedItemId, onSelectItem}) {
+export default function ListGroup({items, selectedItemId, onSelectItem, nameProperty, idProperty}) {
 
     const getButtonClassName = (itemId) => {
         if(itemId === selectedItemId){
@@ -11,10 +11,15 @@ export default function ListGroup({items, selectedItemId, onSelectItem}) {
     return (
         <div className="list-group">
             { items.map( item => {
-                return <button type="button" className={getButtonClassName(item._id)} key={item._id} onClick={()=>{onSelectItem(item._id)}}>{item.name}</button>
+                return <button type="button" className={getButtonClassName(item[idProperty])} key={item[idProperty]} onClick={()=>{onSelectItem(item[idProperty])}}>{item[nameProperty]}</button>
             })
 
             }
         </div>
     )
+}
+
+ListGroup.defaultProps = {
+    nameProperty: "name",
+    idProperty: "_id"
 }
