@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { getMovies } from "../services/fakeMovieService";
 import LikeButton from "./Common/likeButton";
+import SortIcon from "./Common/sortIcon";
 import Pagination from "./Common/pagination";
 import { paginate } from "./utils/paginate";
+import _ from "lodash";
 
 const pageSize = 4;
 let shortMovieList;
 
 export default function Movies({selectedGenreId, pageNumber, setPageNumber}) {
   const [movies, setMovies] = useState(getMovies());
+  const [sort, setSort] = useState({ sortBy: "title", order: "asc" })
 
   useEffect( () => {
     if(shortMovieList.length === 0){
@@ -35,22 +38,30 @@ export default function Movies({selectedGenreId, pageNumber, setPageNumber}) {
     setMovies([...newMovies]);
   }
 
+  const sortTable = (sortBy) => {
+    if(sortBy === sort.sortBy){
+      setSort({sortBy: sortBy, order: sort.order === "asc" ? "desc" : "asc"})
+    } else {
+      setSort({sortBy: sortBy, order: sort.order})
+    }
+  }
+
   if (movies.length > 0) {
     let genreFilteredMovieList = movies.filter(movie => {return movie.genre._id === selectedGenreId} )
     if(genreFilteredMovieList.length === 0  ) genreFilteredMovieList = movies
-    shortMovieList = paginate(genreFilteredMovieList, pageNumber, pageSize)
-    // if(shortMovieList.length === 0) setPageNumber(pageNumber -1)
+    const sortedMovieList = _.orderBy(genreFilteredMovieList, [sort.sortBy], [sort.order])
+    shortMovieList = paginate(sortedMovieList, pageNumber, pageSize)
 
     return (
       <React.Fragment>
-        <p className="fs-2">Showing {genreFilteredMovieList.length} movies in the database</p>
+        <p className="fs-2">Showing {sortedMovieList.length} movies in the database</p>
         <table className="table">
           <thead>
             <tr>
-              <th scope="col">Title</th>
-              <th scope="col">Genre</th>
-              <th scope="col">Stock</th>
-              <th scope="col">Rate</th>
+              <th scope="col" className="clickale" onClick={( ) => {sortTable("title")}}>Title <SortIcon header={"title"} sort={sort} /></th>
+              <th scope="col" className="clickale" onClick={( ) => {sortTable("genre.name")}}>Genre <SortIcon header={"genre.name"} sort={sort} /></th>
+              <th scope="col" className="clickale" onClick={( ) => {sortTable("numberInStock")}}>Stock <SortIcon header={"numberInStock"} sort={sort} /></th>
+              <th scope="col" className="clickale" onClick={( ) => {sortTable("dailyRentalRate")}}>Rate <SortIcon header={"dailyRentalRate"} sort={sort} /></th>
               <th scope="col"></th>
             </tr>
           </thead>
@@ -79,7 +90,7 @@ export default function Movies({selectedGenreId, pageNumber, setPageNumber}) {
             })}
           </tbody>
         </table>
-        <Pagination items={genreFilteredMovieList}  pageSize={pageSize} pageNumber={pageNumber} onChangePage={(val) => setPageNumber(val)} />
+        <Pagination items={sortedMovieList}  pageSize={pageSize} pageNumber={pageNumber} onChangePage={(val) => setPageNumber(val)} />
       </React.Fragment>
     );
   } else {

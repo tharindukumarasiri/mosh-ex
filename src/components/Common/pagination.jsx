@@ -17,7 +17,7 @@ export default function Pagination({ items, pageSize, pageNumber, onChangePage }
 
         return pageNumberList.map((pgNumber) => {
             return (
-                <li className={pageNumber === pgNumber ? "page-item active" : "page-item"} style={{ cursor: 'pointer' }} key={pgNumber}
+                <li className={pageNumber === pgNumber ? "page-item active clickale" : "page-item clickale"} key={pgNumber}
                     onClick={() => { onChangePage(pgNumber) }}><a className="page-link">{pgNumber}</a></li>
             )
         })
@@ -28,9 +28,9 @@ export default function Pagination({ items, pageSize, pageNumber, onChangePage }
     return (
         <nav aria-label="Page navigation example">
             <ul className="pagination">
-                <li className="page-item" style={{ cursor: 'pointer' }} onClick={() => { if(pageNumber !== 1) onChangePage(pageNumber - 1) }}><a className="page-link">Previous</a></li>
+                <li className="page-item clickale" onClick={() => { if(pageNumber !== 1) onChangePage(pageNumber - 1) }}><a className="page-link">Previous</a></li>
                 {getPageNumbers()}
-                <li className="page-item" style={{ cursor: 'pointer' }} onClick={() => { if(pageNumber !== pageNumberList.at(-1)) onChangePage(pageNumber + 1) }}><a className="page-link" >Next</a></li>
+                <li className="page-item clickale" onClick={() => { if(pageNumber !== pageNumberList.at(-1)) onChangePage(pageNumber + 1) }}><a className="page-link" >Next</a></li>
             </ul>
         </nav>
     )

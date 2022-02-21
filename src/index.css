@@ -9,3 +9,7 @@ body {
 code {
   font-family: 'font-awesome';
 }
+
+.clickale {
+  cursor: pointer;
+}
