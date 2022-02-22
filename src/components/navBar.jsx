@@ -1,13 +1,13 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 
-export default function NavBar({ counterTotal }) {
+export default function NavBar() {
     return (
         <nav className='navbar navbar-light bg-light'>
             <div className='col'>
-                <span className='navbar-brand mb-0 h1'>Counter Total</span>
-                <span className='badge rounded-pill bg-secondary'>{ counterTotal }</span>
+                <Link to="/movies">Movies</Link>
+                <Link to="/counters">Counters</Link>
             </div>
-
         </nav>
     )
 }
