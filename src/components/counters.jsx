@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import Counter from "./counter";
-import NavBar from "./navBar";
 
 export default function Counters() {
   const [counters, setCounters] = useState([
@@ -45,7 +44,7 @@ export default function Counters() {
   };
   return (
     <div className="container">
-      <NavBar counterTotal={getCounterTotal()} />
+      <h3>Counter Total <span className="badge bg-secondary">{getCounterTotal()}</span></h3>
       <button type="button" className="btn btn-primary mt-3 mb-3" onClick={() => { resetCounters() }}>
         Reset
       </button>

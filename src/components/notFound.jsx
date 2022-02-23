@@ -1,5 +1,5 @@
 export default function NotFound(){
     return(
-        <p>404 not founds</p>
+        <h1 className="d-flex justify-content-center pt-5">404 not found</h1>
     )
 }

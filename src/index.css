@@ -1,6 +1,5 @@
 body {
   margin: 0;
-  padding: 20px 0 0 0;
   font-family: 'font-awesome';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -12,4 +11,14 @@ code {
 
 .clickale {
   cursor: pointer;
+}
+
+.clickableText {
+  color: rgb(24, 89, 230);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.clickableText:hover {
+  text-decoration: underline;
 }

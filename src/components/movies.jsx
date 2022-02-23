@@ -7,12 +7,13 @@ import Pagination from "./Common/pagination";
 import { paginate } from "./utils/paginate";
 import { getGenres } from "../services/fakeGenreService";
 import _ from "lodash";
+import { Link } from "react-router-dom";
 
 const pageSize = 4;
 let shortMovieList;
 
 export default function Movies() {
-  const [selectedGenreId, setSelectedGenreId] = useState(1);
+  const [selectedGenreId, setSelectedGenreId] = useState(2);
   const [pageNumber, setPageNumber] = useState(1);
   const [movies, setMovies] = useState(getMovies());
   const [sort, setSort] = useState({ sortBy: "title", order: "asc" })
@@ -87,7 +88,7 @@ export default function Movies() {
                 {shortMovieList.map((movie) => {
                   return (
                     <tr key={movie._id}>
-                      <td>{movie.title}</td>
+                      <td><Link to={`/movies/${movie._id}`} className="clickableText">{movie.title}</Link></td>
                       <td>{movie.genre.name}</td>
                       <td>{movie.numberInStock}</td>
                       <td>{movie.dailyRentalRate}</td>

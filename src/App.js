@@ -2,21 +2,24 @@ import React from "react";
 import Movies from "./components/movies";
 import Counters from "./components/counters";
 import NavBar from "./components/navBar";
-import { Routes, Route, Navigate  } from "react-router-dom";
+import Movie from "./components/movie";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./components/home";
 import NotFound from "./components/notFound";
 
 function App() {
   return (
-    <div className="container">
+    <div>
       <NavBar />
-      <div className="content">
+      <div className="content m-5">
         <Routes>
+          <Route path='/movies/:id' element={<Movie />} />
           <Route path='/movies' element={<Movies />} />
           <Route path='/counters' element={<Counters />} />
           <Route path='/not-found' element={<NotFound />} />
+          <Route path='/home' element={<Navigate to="/" />} />
           <Route path='/' element={<Home />} />
-          <Route path="*" element={<Navigate to ="/not-found" />} />
+          <Route path="*" element={<Navigate to="/not-found" />} />
         </Routes>
       </div>
     </div>
