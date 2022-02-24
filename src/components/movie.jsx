@@ -1,11 +1,10 @@
 import { useParams, useNavigate } from "react-router-dom";
 
-export default function Movie(props) {
+export default function Movie() {
     const { id } = useParams();
     const navigate = useNavigate();
 
     const handleSave = () => {
-        console.log(navigate)
         navigate('/movies')
     }
 

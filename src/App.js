@@ -6,6 +6,7 @@ import Movie from "./components/movie";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./components/home";
 import NotFound from "./components/notFound";
+import Login from "./components/login";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path='/movies' element={<Movies />} />
           <Route path='/counters' element={<Counters />} />
           <Route path='/not-found' element={<NotFound />} />
+          <Route path='/login' element={<Login />} />
           <Route path='/home' element={<Navigate to="/" />} />
           <Route path='/' element={<Home />} />
           <Route path="*" element={<Navigate to="/not-found" />} />

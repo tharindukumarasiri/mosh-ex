@@ -20,6 +20,11 @@ export default function NavBar() {
                             <NavLink className="nav-link" to="/counters">Counters</NavLink>
                         </li>
                     </ul>
+                    <ul className="navbar-nav">
+                        <li className="nav-item">
+                            <NavLink className="nav-link" to="/login">Login</NavLink>
+                        </li>
+                    </ul>
                 </div>
             </div>
 
