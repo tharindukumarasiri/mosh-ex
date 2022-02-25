@@ -21,7 +21,7 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/home' element={<Navigate to="/" />} />
           <Route path='/' element={<Home />} />
-          <Route path="*" element={<Navigate to="/not-found" />} />
+          <Route path="*" element={<NotFound/>} />
         </Routes>
       </div>
     </div>

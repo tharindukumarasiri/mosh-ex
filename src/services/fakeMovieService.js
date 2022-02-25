@@ -1,6 +1,4 @@
-
-
-const movies = [
+let movies = [
     {
         _id: "4354hv33454hv345v345",
         title: "Terminator",
@@ -19,28 +17,28 @@ const movies = [
     },
     {
         _id: "3434hg3jh4534hkjkj434",
-        title: "Trip To Italy",
+        title: "Trip To Italy 1",
         genre: { _id: "33h54j3h4j5h3j45h3", name: "Action" },
         numberInStock: 7,
         dailyRentalRate: 3,
     },
     {
         _id: "3434hg3jh45f4hkjkj434",
-        title: "Trip To Italy",
+        title: "Trip To Italy 2",
         genre: { _id: "33h54j3h4j5h3j45h3", name: "Action" },
         numberInStock: 7,
         dailyRentalRate: 3,
     },
     {
         _id: "3434hg3jh453fhkjkj434",
-        title: "Trip To Italy",
+        title: "Trip To Italy 3",
         genre: { _id: "33h54j3h4j5h3j45h3", name: "Action" },
         numberInStock: 7,
         dailyRentalRate: 3,
     },
     {
         _id: "3434hg3jhs534hkjkj434",
-        title: "Trip To Italy",
+        title: "Trip To Italy 4",
         genre: { _id: "33h54j3h4j5h3j45h3", name: "Action" },
         numberInStock: 7,
         dailyRentalRate: 3,
@@ -92,4 +90,18 @@ const movies = [
 
 export function getMovies(){
     return movies;
+}
+
+export function getMovieFromId(id){
+    return movies.find( movie => movie._id === id )
+}
+
+export function setMovie(newMovie){
+    const index = movies.findIndex((movie) => { return movie._id === newMovie._id})
+
+    if(index < 0){
+        movies.push(newMovie);
+    } else {
+        movies[index] = newMovie
+    }
 }

@@ -7,7 +7,7 @@ import Pagination from "./Common/pagination";
 import { paginate } from "./utils/paginate";
 import { getGenres } from "../services/fakeGenreService";
 import _ from "lodash";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const pageSize = 4;
 let shortMovieList;
@@ -20,6 +20,8 @@ export default function Movies() {
   const [sideMenuList, setSideMenueList] = useState([
     { _id: 2, name: "All Genres" },
   ]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     let newMenuList = [...sideMenuList];
@@ -74,6 +76,7 @@ export default function Movies() {
           </div>
           <div className="col">
             <p className="fs-2">Showing {sortedMovieList.length} movies in the database</p>
+            <button type="button" className="btn btn-primary mt-3 mb-5" onClick={() => {navigate("/movies/new")}} >Add new movie</button>
             <table className="table">
               <thead>
                 <tr>
