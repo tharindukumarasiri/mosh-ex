@@ -12,8 +12,8 @@ export default function Movie() {
     const genres = getGenres();
 
     useEffect(() => {
-        if (getMovieFromId(id) == undefined)
-            navigate("/not-found", true)//Todo not working 
+        if (getMovieFromId(id) == undefined && id !== 'new')
+            navigate("/not-found")//Todo not working 
     }, []);
 
     function getMovieData() {

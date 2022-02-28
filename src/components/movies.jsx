@@ -11,6 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const pageSize = 4;
 let shortMovieList;
+let filteredMovieList;
 
 export default function Movies() {
   const [selectedGenreId, setSelectedGenreId] = useState(2);
@@ -20,6 +21,7 @@ export default function Movies() {
   const [sideMenuList, setSideMenueList] = useState([
     { _id: 2, name: "All Genres" },
   ]);
+  const [searchText, setSearchText] = useState('')
 
   const navigate = useNavigate();
 
@@ -30,7 +32,7 @@ export default function Movies() {
   }, []);
 
   useEffect(() => {
-    if (shortMovieList.length === 0) {
+    if (shortMovieList.length === 0 && pageNumber > 1) {
       setPageNumber(pageNumber - 1)
     }
   }, [shortMovieList]);
@@ -62,21 +64,31 @@ export default function Movies() {
     }
   }
 
+  const onSearchText = (e) => {
+    setSelectedGenreId(1);
+    setPageNumber(1);
+    filteredMovieList = movies.filter(movie => { return movie.title.toUpperCase().includes(e.target.value.toUpperCase()) });
+    setSearchText(e.target.value);
+  }
+
   if (movies.length > 0) {
-    let genreFilteredMovieList = movies.filter(movie => { return movie.genre._id === selectedGenreId })
-    if (genreFilteredMovieList.length === 0) genreFilteredMovieList = movies
-    const sortedMovieList = _.orderBy(genreFilteredMovieList, [sort.sortBy], [sort.order])
+    if(selectedGenreId !== 1){
+      filteredMovieList = movies.filter(movie => { return movie.genre._id === selectedGenreId })
+      if (filteredMovieList.length === 0) filteredMovieList = movies
+    }
+    const sortedMovieList = _.orderBy(filteredMovieList, [sort.sortBy], [sort.order])
     shortMovieList = paginate(sortedMovieList, pageNumber, pageSize)
 
     return (
       <React.Fragment>
         <div className="row">
           <div className="col-2">
-            <ListGroup items={sideMenuList} selectedItemId={selectedGenreId} onSelectItem={(id) => { setSelectedGenreId(id); setPageNumber(1) }} />
+            <ListGroup items={sideMenuList} selectedItemId={selectedGenreId} onSelectItem={(id) => { setSelectedGenreId(id); setPageNumber(1); setSearchText("") }} />
           </div>
           <div className="col">
             <p className="fs-2">Showing {sortedMovieList.length} movies in the database</p>
-            <button type="button" className="btn btn-primary mt-3 mb-5" onClick={() => {navigate("/movies/new")}} >Add new movie</button>
+            <button type="button" className="btn btn-primary mt-3 mb-4" onClick={() => { navigate("/movies/new") }} >Add new movie</button>
+            <input id="search" type="text" className="form-control mb-4" placeholder="Search Movie" value={searchText} onChange={onSearchText} ></input>
             <table className="table">
               <thead>
                 <tr>
