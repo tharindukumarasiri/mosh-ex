@@ -1,17 +1,20 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { getMovieFromId, setMovie } from "../services/fakeMovieService";
+import { getMovieFromId, setMovie } from "../services/movieService";
 import { useState } from 'react';
-import { getGenres } from './../services/fakeGenreService';
+import { getGenres } from '../services/genreService';
 import { useEffect } from 'react';
 
 export default function Movie() {
     const { id } = useParams();
     const navigate = useNavigate();
-    const [movieData, setMovieData] = useState(getMovieData());
+    const [movieData, setMovieData] = useState(getMovieFromId(id));
     const [errors, setErrors] = useState({});
-    const genres = getGenres();
+    const [genres, setGenres] = useState([])
 
+    console.log(movieData)
     useEffect(() => {
+        getGenres().then(result => setGenres(result));
+
         if (getMovieFromId(id) == undefined && id !== 'new')
             navigate("/not-found")//Todo not working 
     }, []);
@@ -47,6 +50,7 @@ export default function Movie() {
         } else {
             newField[e.target.name] = e.target.value;
         }
+        console.log(newField)
 
         setMovieData(newField);
     }
@@ -81,14 +85,14 @@ export default function Movie() {
             <form>
                 <div className="mb-3">
                     <label htmlFor="title" className="form-label">Title</label>
-                    <input id="title" type="text" autoFocus={true} className="form-control" name="title" value={movieData.title} onChange={onFieldValuesChange} ></input>
+                    <input id="title" type="text" autoFocus={true} className="form-control" name="title" value={movieData?.title} onChange={onFieldValuesChange} ></input>
                     {errors.title &&
                         <div className='alert alert-danger' role="alert">{errors.title}</div>
                     }
                 </div>
                 <div className="mb-3">
                     <label htmlFor="genre" className="form-label">Genre</label>
-                    <select className="form-select" name="genre" value={movieData.genre._id} onChange={onFieldValuesChange}>
+                    <select className="form-select" name="genre" value={movieData?.genre?._id} onChange={onFieldValuesChange}>
                         {genres.map((genre) => {
                             return <option key={genre._id} value={genre._id}>{genre.name}</option>
                         })
@@ -100,14 +104,14 @@ export default function Movie() {
                 </div>
                 <div className="mb-3">
                     <label htmlFor="numberInStock" className="form-label">Number In Stock</label>
-                    <input id="numberInStock" type="text" className="form-control" name="numberInStock" value={movieData.numberInStock} onChange={onFieldValuesChange} ></input>
+                    <input id="numberInStock" type="text" className="form-control" name="numberInStock" value={movieData?.numberInStock} onChange={onFieldValuesChange} ></input>
                     {errors.numberInStock &&
                         <div className='alert alert-danger' role="alert">{errors.numberInStock}</div>
                     }
                 </div>
                 <div className="mb-3">
                     <label htmlFor="dailyRentalRate" className="form-label">Rate</label>
-                    <input id="dailyRentalRate" type="text" className="form-control" name="dailyRentalRate" value={movieData.dailyRentalRate} onChange={onFieldValuesChange} ></input>
+                    <input id="dailyRentalRate" type="text" className="form-control" name="dailyRentalRate" value={movieData?.dailyRentalRate} onChange={onFieldValuesChange} ></input>
                     {errors.dailyRentalRate &&
                         <div className='alert alert-danger' role="alert">{errors.dailyRentalRate}</div>
                     }

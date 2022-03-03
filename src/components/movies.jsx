@@ -1,34 +1,32 @@
 import React, { useEffect, useState } from "react";
-import { getMovies } from "../services/fakeMovieService";
+import { getMovies, deleteMovie } from "../services/movieService";
 import LikeButton from "./Common/likeButton";
 import SortIcon from "./Common/sortIcon";
 import ListGroup from "./listGroup";
 import Pagination from "./Common/pagination";
 import { paginate } from "./utils/paginate";
-import { getGenres } from "../services/fakeGenreService";
+import { getGenres } from "../services/genreService";
 import _ from "lodash";
 import { Link, useNavigate } from "react-router-dom";
 
 const pageSize = 4;
-let shortMovieList;
+let shortMovieList = [];
 let filteredMovieList;
 
 export default function Movies() {
   const [selectedGenreId, setSelectedGenreId] = useState(2);
   const [pageNumber, setPageNumber] = useState(1);
-  const [movies, setMovies] = useState(getMovies());
+  const [movies, setMovies] = useState([]);
   const [sort, setSort] = useState({ sortBy: "title", order: "asc" })
   const [sideMenuList, setSideMenueList] = useState([
     { _id: 2, name: "All Genres" },
   ]);
   const [searchText, setSearchText] = useState('')
-
   const navigate = useNavigate();
 
-  useEffect(() => {
-    let newMenuList = [...sideMenuList];
-    newMenuList.push(...getGenres());
-    setSideMenueList([...newMenuList]);
+  useEffect(async () => {
+    getMovies().then(result => setMovies(result));
+    getGenres().then(result => setSideMenueList(prevMenuList =>  [...prevMenuList, ...result]) )  
   }, []);
 
   useEffect(() => {
@@ -37,15 +35,8 @@ export default function Movies() {
     }
   }, [shortMovieList]);
 
-  const deleteMovie = (id) => {
-    const newMovies = movies;
-    newMovies.splice(
-      newMovies.findIndex((movie) => {
-        return movie._id === id;
-      }),
-      1
-    );
-    setMovies([...newMovies]);
+  const dltMovie = (movie) => {
+    deleteMovie(movie).then(result => {setMovies(result)});
   };
 
   const onLikeBtnClicked = (movie) => {
@@ -114,7 +105,7 @@ export default function Movies() {
                         <button
                           type="button"
                           className="btn btn-danger"
-                          onClick={() => deleteMovie(movie._id)}
+                          onClick={() => dltMovie(movie)}
                         >
                           Delete
                         </button>
